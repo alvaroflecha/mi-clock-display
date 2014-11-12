@@ -28,4 +28,18 @@ public class NumberDisplay
         value = newValue;
     }
     
-}
+    public String getDisplayValue()
+    {
+        if(value < 10)
+        {
+            return "0" + value;
+        }
+    
+        else
+        {
+            return "" + value;
+        
+        }
+    }
+    
+}    
