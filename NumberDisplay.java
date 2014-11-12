@@ -42,4 +42,9 @@ public class NumberDisplay
         }
     }
     
+    public int getValue()
+    {
+        return value;
+    }
+    
 }    
