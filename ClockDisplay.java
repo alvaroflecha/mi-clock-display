@@ -38,10 +38,17 @@ public class ClockDisplay
             horaActual = newHours + ":"+ newMinutes;
         
     }
+}
     
+    /**
+     * Muestra una cadena de 5 caracteres mostrando horas y minutos
+     */
+public String getTime() {
     
+       return horaActual;
+}
    
     
     
 }
-}
+
