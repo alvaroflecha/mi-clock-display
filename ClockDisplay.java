@@ -9,22 +9,28 @@ public class ClockDisplay
 {
     private NumberDisplay hours;
     private NumberDisplay minutes;
-    private String horaActual;
-    
+    private String currentTime;
+    /**
+     * Constructor objetos Clockdisplay. Crea reloj a 00:00
+     */
     public ClockDisplay()
     {
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
-        horaActual = "00:00";
-        
+        currentTime = (hours.getDisplayValue() + ":" + minutes.getDisplayValue());
         
     }
-    
-    public ClockDisplay(int newHours, int newMinutes)
+    /**
+     * Constructor objetos ClockDisplay
+     * Crea nuevo reloj con los valores de los parametros
+     */
+    public ClockDisplay(int hours2, int minutes2)
     {   
         hours = new NumberDisplay(24);
+        hours.setValue(hours2);
         minutes = new NumberDisplay(60);
-        horaActual = newHours + ":" + newMinutes;
+        minutes.setValue(minutes2);
+        currentTime = (hours.getDisplayValue() + ":" + minutes.getDisplayValue());
         
     }
     
@@ -33,22 +39,37 @@ public class ClockDisplay
      */
     public void setTime(int newHours, int newMinutes)
     {
-        if((newHours < 24) && (newHours >= 0)&&(newMinutes < 60) && (newMinutes >= 0)){
-            
-            horaActual = newHours + ":"+ newMinutes;
+       hours.setValue(newHours);
+       minutes.setValue(newMinutes);
         
     }
-}
+
     
+    /**
+     * 
+     * Hace avanzar un minuto al reloj
+     */
+    public void timeTick() 
+    {
+        minutes.increment();
+        
+        if(minutes.value == 00)
+        {
+            hours.increment();
+        }
+       
+    }
+
     /**
      * Muestra una cadena de 5 caracteres mostrando horas y minutos
      */
-public String getTime() {
+     public String getTime()
+     { 
+         String currentTime = (hours.getDisplayValue() + ":" + minutes.getDisplayValue());
+         return currentTime;
+     }    
+} 
     
-       return horaActual;
-}
-   
     
-    
-}
+
 

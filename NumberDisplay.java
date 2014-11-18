@@ -8,7 +8,7 @@
 public class NumberDisplay
 {
     // El valor almacenado
-    private int value;
+    public int value;
      //El limite al que puede llegar el valor
     private int limit;
     /**
