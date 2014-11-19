@@ -8,7 +8,7 @@
 public class NumberDisplay
 {
     // El valor almacenado
-    public int value;
+    private int value;
      //El limite al que puede llegar el valor
     private int limit;
     /**
@@ -61,7 +61,7 @@ public class NumberDisplay
     public void increment()// tambien value = value +1
     //
     {
-        if(value < (limit-1))
+        if(value < (limit-1)) // value = value + 1 (mirar otra forma para hacerlo)
         {
             value = value+1;
         }
