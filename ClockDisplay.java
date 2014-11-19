@@ -71,11 +71,14 @@ public class ClockDisplay
      */
      public String getTime()
      { 
-         if(hours.getValue()<=12)
+         if(hours.getValue()<12)
          {
              displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+" am");
          }
-         
+         else if(hours.getValue() == 12)
+         {
+              displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+ " pm");
+         }
          else if( hours.getValue()>12)
          {
             hours.setValue(hours.getValue() - 12);
