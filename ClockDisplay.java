@@ -56,21 +56,31 @@ public class ClockDisplay
     public void timeTick() 
     {
         minutes.increment();
-        updateDisplay();
         
-        if(minutes.getValue()== 0)//
-        //
+        
+        if(minutes.getValue()== 0) 
         {
-            hours.increment();
+           hours.increment();
         }
-       
+        
+       updateDisplay();
     }
 
     /**
-     * Muestra una cadena de 5 caracteres mostrando horas y minutos
+     * Muestra una cadena de 5 caracteres mostrando horas y minutos en formato 12 horas
      */
      public String getTime()
      { 
+         if(hours.getValue()<=12)
+         {
+             displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+" am");
+         }
+         
+         else if( hours.getValue()>12)
+         {
+            hours.setValue(hours.getValue() - 12);
+            displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+ " pm");
+         }
          return displayString;
      }    
      
