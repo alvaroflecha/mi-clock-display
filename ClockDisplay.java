@@ -11,8 +11,16 @@ public class ClockDisplay
     private NumberDisplay hours;
     //objeto que guarda minutos
     private NumberDisplay minutes;
-    //String de 5 caracteres:hora , : , y minutos
+    //String de 9 caracteres:hora , : , minutos, dia, / , mes , / , año
     private String displayString;
+    //objeto numberDisplay que guarda años
+    private NumberDisplay year;
+    //objeto numberDisplay que guarda meses
+    private NumberDisplay month;
+    //objeto numberDisplay que guarda dias
+    private NumberDisplay day;
+    
+    
     /**
      * Constructor objetos Clockdisplay. Crea reloj a 00:00
      */
@@ -20,8 +28,10 @@ public class ClockDisplay
     {
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
+        day = new NumberDisplay(31);
+        month = new NumberDisplay(13);
+        year = new NumberDisplay(99);
         updateDisplay();
-        
     }
     /**
      * Constructor objetos ClockDisplay
@@ -36,14 +46,35 @@ public class ClockDisplay
         updateDisplay();
         
     }
+    /**
+     * Crea nuevo reloj que incluye fecha
+     */
+    public ClockDisplay( int newHours, int newMinutes, int newYear, int newMonth, int newDay)
+    {   
+        hours = new NumberDisplay(24);
+        hours.setValue(newHours); //El objeto hours tiene el valor que el usuario mete, invocando setValue de NumberDisplay
+        minutes = new NumberDisplay(60);
+        minutes.setValue(newMinutes);
+        day = new NumberDisplay(31);
+        day.setValue(newDay);
+        month = new NumberDisplay(13);
+        month.setValue(newMonth);
+        year = new NumberDisplay(99);
+        year.setValue(newYear);
+        updateDisplay();
+        
+    }
     
     /**
-     * Fija unas horas y unos minutos pasados como parametros
+     * Fija unas horas, minutos  y fecha pasados como parametros
      */
-    public void setTime(int actualHour, int actualMinutes)
+    public void setTime(int actualHour, int actualMinutes, int actualDay, int actualMonth, int actualYear)
     {
        hours.setValue(actualHour);
        minutes.setValue(actualMinutes);
+       day.setValue(actualDay);
+       month.setValue(actualMonth);
+       year.setValue(actualYear);
        updateDisplay();
         
     }
@@ -61,41 +92,88 @@ public class ClockDisplay
         if(minutes.getValue()== 0) 
         {
            hours.increment();
-        }
         
+           if(hours.getValue() == 0)
+           {
+               day.increment();
+        
+               if(day.getValue() == 0)
+               {
+                    month.increment();
+                    day.increment();
+                    if(month.getValue() == 0)
+                    {
+                        year.increment();
+                        month.increment();
+                    }
+               }
+           }
+        } 
        updateDisplay();
     }
 
     /**
-     * Muestra una cadena de 5 caracteres mostrando horas y minutos en formato 12 horas
+     * Muestra una cadena de 9 caracteres mostrando horas y minutos en formato 12 horas, e incluye la fecha
      */
      public String getTime()
      { 
-         if(hours.getValue()<12)
-         {
-             displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+" am");
-         }
-         else if(hours.getValue() == 12)
-         {
-              displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+ " pm");
-         }
-         else if( hours.getValue()>12)
-         {
-            hours.setValue(hours.getValue() - 12);
-            displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue()+ " pm");
-         }
-         return displayString;
+        return displayString;
      }    
      
      /**
       * Actualiza el atributo displayString
       */
-     private void updateDisplay()//
-    {
      
-        displayString = (hours.getDisplayValue() + ":" + minutes.getDisplayValue());
+    
+       public void updateDisplay()
+    {
+        int actualHour = hours.getValue();
+        String displayedHour = "";
+        String amPm = "";   
+        boolean isMorning = true;
+        
+        if (actualHour == 0) 
+        {
+            displayedHour = "12";
+            isMorning = true;
+        }
+        else if (actualHour < 10)
+        {
+            displayedHour = "0" + actualHour;
+            isMorning = true;            
+        }
+        else if (actualHour < 12)
+        {
+            displayedHour = "" + actualHour;
+            isMorning = true;            
+        }
+        else if (actualHour == 12)
+        {
+            displayedHour = "12";
+            isMorning = false;
+        }
+        else if (actualHour < 22)
+        {
+            displayedHour = "0" + (actualHour - 12);
+            isMorning = false;
+        }
+        else {
+            displayedHour = "" + (actualHour- 12);
+            isMorning = false;
+        }
+        
+ 
+        if (isMorning) {
+            amPm = "am";
+        }
+        else {
+            amPm = "pm";
+        }
+        
+        displayString = displayedHour + ":" +  minutes.getDisplayValue() + amPm + " " + day.getDisplayValue() + "/" + month.getDisplayValue() + "/" + year.getDisplayValue();
     }
-} 
+    
+}
     
     
 
